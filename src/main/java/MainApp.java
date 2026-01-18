@@ -1,41 +1,78 @@
 public class MainApp {
     public static void main(String[] args) {
-        Point p1 = new Point(1, 3);
-        Point p2 = new Point(5, 8);
-        Point p3 = new Point(10, 11);
-        Point p4 = new Point(15, 19);
+        System.out.println("--- Создание ломаной и начальные расчеты ---");
 
-        Line line1 = new Line(p1, p2);
-        Line line2 = new Line(p3, p4);
-        Line line3 = new Line(p2, p3);
+        Point pA = new Point(1, 5);
+        Point pB = new Point(2, 8);
+        Point pC = new Point(5, 3);
+        Point pD = new Point(8, 9);
 
-        System.out.println("--- Исходное состояние объектов ---");
-        System.out.println("Линия 1:\n" + line1);
-        System.out.println("Линия 2:\n" + line2);
-        System.out.println("Линия 3:\n" + line3);
-        System.out.println("----------------------------------\n");
-
-        System.out.println("Текстовое представление Линии 3 (до изменения):");
-        System.out.println(line3);
+        PolyLine polyLine = new PolyLine(pA, pB, pC, pD);
+        System.out.println("Исходная ломаная: " + polyLine);
         System.out.println();
 
-        line3.getStart().setX(7);
-        line3.getStart().setY(10);
-        line3.getEnd().setX(12);
-        line3.getEnd().setY(15);
-        System.out.println("Координаты изменены.\n");
 
-        System.out.println("Текстовое представление Линии 3 (после изменения):");
-        System.out.println(line3);
+        double polyLineLength = polyLine.getLength();
+        System.out.printf("Длина ломаной (PolyLine): %.2f\n", polyLineLength);
         System.out.println();
 
-        System.out.println("--- Проверка изменений в других линиях ---");
-        System.out.println("Линия 1 (после изменения p2):\n" + line1);
-        System.out.println("Линия 2 (после изменения p3):\n" + line2);
-        System.out.println("------------------------------------------\n");
+        Line[] lineSegments = polyLine.getLines();
+        System.out.println("Линии, составляющие ломаную:");
+        for (int i = 0; i < lineSegments.length; i++) {
+            System.out.printf("  Сегмент %d: %s (Длина: %.2f)\n", i + 1, lineSegments[i].getStart().toString() + " -> " + lineSegments[i].getEnd().toString(), lineSegments[i].getLength());
+        }
+        System.out.println();
 
-        double totalLength = line1.getLength() + line2.getLength() + line3.getLength();
-        System.out.printf("Суммарная длина всех трех линий: %.2f\n", totalLength);
+        double totalLinesLength = 0;
+        for (Line line : lineSegments) {
+            totalLinesLength += line.getLength();
+        }
+        System.out.printf("Суммарная длина массива Линий: %.2f\n", totalLinesLength);
+        System.out.println();
+
+
+        System.out.println("Сравнение длины ломаной и суммарной длины сегментов:");
+        if (Math.abs(polyLineLength - totalLinesLength) < 0.0001) {
+            System.out.println("Длины совпадают. Отлично!");
+        } else {
+            System.out.println("Длины не совпадают. Есть ошибка!");
+        }
+        System.out.println("--------------------------------------------------\n");
+
+        System.out.println("--- Изменение координат Точки {2;8} на {12;8} ---");
+        System.out.println("Исходное состояние pB: " + pB);
+
+        System.out.println("Изменяем координаты pB...");
+        pB.setX(12);
+        System.out.println("pB после изменения: " + pB);
+        System.out.println();
+
+        System.out.println("Ломаная после изменения pB: " + polyLine);
+        System.out.printf("Новая длина ломаной: %.2f\n", polyLine.getLength());
+        System.out.println();
+
+        System.out.println("Проверяем изменения в соответствующих сегментах массива линий:");
+        if (lineSegments.length >= 2) {
+            System.out.println("  Первый сегмент (pA->pB) после изменения: " + lineSegments[0].getStart().toString() + " -> " + lineSegments[0].getEnd().toString());
+            System.out.printf("  Его новая длина: %.2f\n", lineSegments[0].getLength());
+            System.out.println("  Второй сегмент (pB->pC) после изменения: " + lineSegments[1].getStart().toString() + " -> " + lineSegments[1].getEnd().toString());
+            System.out.printf("  Его новая длина: %.2f\n", lineSegments[1].getLength());
+        } else {
+            System.out.println("Недостаточно сегментов для демонстрации.");
+        }
+        System.out.println();
+
+        double newTotalLinesLength = 0;
+        for (Line line : lineSegments) {
+            newTotalLinesLength += line.getLength();
+        }
+        System.out.printf("Новая суммарная длина массива Линий: %.2f\n", newTotalLinesLength);
+
+        if (Math.abs(polyLine.getLength() - newTotalLinesLength) < 0.0001) {
+            System.out.println("Длины ломаной и массива линий совпадают и после изменения. Задача решена верно!");
+        } else {
+            System.out.println("Длины не совпадают после изменения. Есть ошибка!");
+        }
+        System.out.println("--------------------------------------------------\n");
     }
 }
-
