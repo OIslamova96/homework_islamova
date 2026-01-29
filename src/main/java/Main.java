@@ -1,41 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-
-        Point p0_0 = new Point(0, 0);
-        Point p3_0 = new Point(3, 0);
-        Point p3_4 = new Point(3, 4);
-        Point p0_4 = new Point(0, 4);
-
-        PolyLine regularPolyLine = new PolyLine(p0_0, p3_0, p3_4);
-        System.out.println(regularPolyLine);
-        System.out.printf("Длина обычной ломаной: %.2f%n", regularPolyLine.getLength());
-
-        ClosedPolyLine closedPolyLine = new ClosedPolyLine(p0_0, p3_0, p3_4, p0_4);
-        System.out.println(closedPolyLine);
-        System.out.printf("Длина замкнутой ломаной: %.2f%n", closedPolyLine.getLength());
-
-        Line singleLine = new Line(p0_0, p3_0);
-        System.out.println(singleLine);
-        System.out.printf("Длина одной линии: %.2f%n", singleLine.getLength());
+        Fraction f1 = new Fraction(1, 3);
+        Fraction f2 = new Fraction(2, 5);
+        Fraction f_five_halves = new Fraction(5, 2);
+        Fraction f_seven_thirds = new Fraction(7, 3);
+        Fraction f_neg_10_3 = new Fraction(-10, 3);
+        System.out.println("f1: " + f1);
+        System.out.println("f2: " + f2);
+        System.out.println("f_five_halves: " + f_five_halves);
+        System.out.println("f_seven_thirds: " + f_seven_thirds);
+        System.out.println("f_neg_10_3: " + f_neg_10_3);
 
 
-        System.out.println("\n--- Использование полиморфного метода ---");
+        System.out.println("\n--- Проверка методов Number ---");
+        System.out.println("f1.intValue() (1/3): " + f1.intValue());
+        System.out.println("f1.longValue() (1/3): " + f1.longValue());
+        System.out.println("f1.floatValue() (1/3): " + f1.floatValue());
+        System.out.println("f1.doubleValue() (1/3): " + f1.doubleValue());
 
-        Measurable[] geometries = new Measurable[3];
-        geometries[0] = regularPolyLine;
-        geometries[1] = closedPolyLine;
-        geometries[2] = singleLine;
+        System.out.println("\nf_five_halves.intValue() (5/2): " + f_five_halves.intValue());
+        System.out.println("f_five_halves.doubleValue() (5/2): " + f_five_halves.doubleValue());
 
-        MeasurementProcessor.printLengths(geometries);
+        System.out.println("\nf_seven_thirds.intValue() (7/3): " + f_seven_thirds.intValue());
+        System.out.println("f_seven_thirds.longValue() (7/3): " + f_seven_thirds.longValue());
+        System.out.println("f_seven_thirds.floatValue() (7/3): " + f_seven_thirds.floatValue());
+        System.out.println("f_seven_thirds.doubleValue() (7/3): " + f_seven_thirds.doubleValue());
 
-        List<Measurable> geometricObjects = new ArrayList<>();
-        geometricObjects.add(regularPolyLine);
-        geometricObjects.add(closedPolyLine);
-        geometricObjects.add(singleLine);
+        System.out.println("\nf_neg_10_3.intValue() (-10/3): " + f_neg_10_3.intValue());
+        System.out.println("f_neg_10_3.doubleValue() (-10/3): " + f_neg_10_3.doubleValue());
 
-        MeasurementProcessor.printLengths(geometricObjects);
+        System.out.println("\n--- Проверка полиморфизма с Number ---");
+        Number[] numbers = new Number[3];
+        numbers[0] = f1;
+        numbers[1] = f_five_halves;
+        numbers[2] = Integer.valueOf(10);
+
+        for (Number num : numbers) {
+            System.out.println("Число: " + num + ", как double: " + num.doubleValue());
+        }
     }
 }
