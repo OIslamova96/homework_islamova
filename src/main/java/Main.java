@@ -1,42 +1,30 @@
 public class Main {
     public static void main(String[] args) {
-        Fraction f1 = new Fraction(1, 3);
-        Fraction f2 = new Fraction(2, 5);
-        Fraction f_five_halves = new Fraction(5, 2);
-        Fraction f_seven_thirds = new Fraction(7, 3);
-        Fraction f_neg_10_3 = new Fraction(-10, 3);
-        System.out.println("f1: " + f1);
-        System.out.println("f2: " + f2);
-        System.out.println("f_five_halves: " + f_five_halves);
-        System.out.println("f_seven_thirds: " + f_seven_thirds);
-        System.out.println("f_neg_10_3: " + f_neg_10_3);
+        // Создаем необходимые объекты Fraction
+        Fraction f_1_2 = new Fraction(1, 2);
+        Fraction f_2_3 = new Fraction(2, 3);
+        Fraction f_3_4 = new Fraction(3, 4);
+        Fraction f_1_5 = new Fraction(1, 5);
+        Fraction f_3_5 = new Fraction(3, 5);
+        Fraction f_1_10 = new Fraction(1, 10);
+        Fraction f_3_10 = new Fraction(3, 10);
+        Fraction f_neg_1_2 = new Fraction(-1, 2);
 
+        System.out.println("--- Выполнение сложений ---");
 
-        System.out.println("\n--- Проверка методов Number ---");
-        System.out.println("f1.intValue() (1/3): " + f1.intValue());
-        System.out.println("f1.longValue() (1/3): " + f1.longValue());
-        System.out.println("f1.floatValue() (1/3): " + f1.floatValue());
-        System.out.println("f1.doubleValue() (1/3): " + f1.doubleValue());
+        double sum1 = NumberUtils.sumAll(f_1_2, f_2_3, f_3_4);
+        System.out.printf("1/2 + 2/3 + 3/4 = %.4f%n", sum1);
 
-        System.out.println("\nf_five_halves.intValue() (5/2): " + f_five_halves.intValue());
-        System.out.println("f_five_halves.doubleValue() (5/2): " + f_five_halves.doubleValue());
+        double sum2 = NumberUtils.sumAll(f_1_5, f_3_5, f_1_10, f_3_10);
+        System.out.printf("1/5 + 3/5 + 1/10 + 3/10 = %.4f%n", sum2);
 
-        System.out.println("\nf_seven_thirds.intValue() (7/3): " + f_seven_thirds.intValue());
-        System.out.println("f_seven_thirds.longValue() (7/3): " + f_seven_thirds.longValue());
-        System.out.println("f_seven_thirds.floatValue() (7/3): " + f_seven_thirds.floatValue());
-        System.out.println("f_seven_thirds.doubleValue() (7/3): " + f_seven_thirds.doubleValue());
-
-        System.out.println("\nf_neg_10_3.intValue() (-10/3): " + f_neg_10_3.intValue());
-        System.out.println("f_neg_10_3.doubleValue() (-10/3): " + f_neg_10_3.doubleValue());
-
-        System.out.println("\n--- Проверка полиморфизма с Number ---");
-        Number[] numbers = new Number[3];
-        numbers[0] = f1;
-        numbers[1] = f_five_halves;
-        numbers[2] = Integer.valueOf(10);
-
-        for (Number num : numbers) {
-            System.out.println("Число: " + num + ", как double: " + num.doubleValue());
-        }
+        double sum3 = NumberUtils.sumAll(
+                Integer.valueOf(5),
+                f_1_2,
+                f_neg_1_2,
+                Double.valueOf(3.0),
+                Long.valueOf(10)
+        );
+        System.out.printf("5 + 1/2 + (-1/2) + 3.0 + 10L = %.4f%n", sum3);
     }
 }
