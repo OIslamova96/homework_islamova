@@ -1,8 +1,8 @@
 import java.util.Objects;
 
-public class Point {
-    private int x;
-    private int y;
+public final class Point {
+    private final int x;
+    private final int y;
 
     public Point(int x, int y) {
         this.x = x;
@@ -17,17 +17,18 @@ public class Point {
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public double distanceTo(Point other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Point for distance calculation cannot be null.");
+        }
+        int dx = this.x - other.x;
+        int dy = this.y - other.y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     @Override
     public String toString() {
-        return String.format("{%d;%d}", x, y);
+        return "{" + x + ";" + y + "}";
     }
 
     @Override

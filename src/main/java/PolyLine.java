@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class PolyLine {
-    private List<Point> points;
+    protected final List<Point> points;
 
     public PolyLine() {
         this.points = new ArrayList<>();
@@ -13,26 +12,29 @@ public class PolyLine {
     public PolyLine(Point... initialPoints) {
         this();
         if (initialPoints != null) {
-            this.points.addAll(Arrays.asList(initialPoints));
+            for (Point p : initialPoints) {
+                if (p != null) {
+                    this.points.add(p);
+                }
+            }
         }
     }
 
-    public void addPoint(Point point) {
-        if (point != null) {
-            this.points.add(point);
+    public PolyLine(List<Point> initialPoints) {
+        this();
+        if (initialPoints != null) {
+            for (Point p : initialPoints) {
+                if (p != null) {
+                    this.points.add(p);
+                }
+            }
         }
     }
 
-    @Override
-    public String toString() {
-        if (points.isEmpty()) {
-            return "Линия []";
+    public void addPoint(Point p) {
+        if (p != null) {
+            this.points.add(p);
         }
-        StringJoiner sj = new StringJoiner(",", "[", "]");
-        for (Point p : points) {
-            sj.add(p.toString());
-        }
-        return "Ломаная " + sj.toString();
     }
 
     public Line[] getLines() {
@@ -48,10 +50,29 @@ public class PolyLine {
 
     public double getLength() {
         double totalLength = 0;
-        Line[] segments = getLines();
-        for (Line line : segments) {
+        for (Line line : getLines()) {
             totalLength += line.getLength();
         }
         return totalLength;
+    }
+
+    public List<Point> getPoints() {
+        return Collections.unmodifiableList(points);
+    }
+
+    @Override
+    public String toString() {
+        if (points.isEmpty()) {
+            return "Ломаная []";
+        }
+        StringBuilder sb = new StringBuilder("Ломаная [");
+        for (int i = 0; i < points.size(); i++) {
+            sb.append(points.get(i));
+            if (i < points.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
