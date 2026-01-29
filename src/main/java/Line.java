@@ -1,4 +1,5 @@
-public class Line {
+
+public class Line implements Measurable {
     private final Point p1;
     private final Point p2;
 
@@ -18,6 +19,7 @@ public class Line {
         return p2;
     }
 
+    @Override
     public double getLength() {
         return p1.distanceTo(p2);
     }

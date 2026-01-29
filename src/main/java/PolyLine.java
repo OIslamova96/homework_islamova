@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PolyLine {
+public class PolyLine implements Measurable {
     protected final List<Point> points;
 
     public PolyLine() {
@@ -48,6 +48,7 @@ public class PolyLine {
         return lines;
     }
 
+    @Override
     public double getLength() {
         double totalLength = 0;
         for (Line line : getLines()) {
